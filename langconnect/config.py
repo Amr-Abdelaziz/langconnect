@@ -21,9 +21,10 @@ def get_embeddings() -> Embeddings:
         from langchain_core.embeddings import DeterministicFakeEmbedding
 
         return DeterministicFakeEmbedding(size=512)
-    from langchain_openai import OpenAIEmbeddings
+    from langchain_community.embeddings import OllamaEmbeddings
 
-    return OpenAIEmbeddings()
+    ollama_base_url = env("OLLAMA_BASE_URL", cast=str, default="http://localhost:11434")
+    return OllamaEmbeddings(model="nomic-embed-text", base_url=ollama_base_url)
 
 
 DEFAULT_EMBEDDINGS = get_embeddings()
